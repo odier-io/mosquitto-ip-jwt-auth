@@ -30,7 +30,7 @@ IP and [JWT](https://jwt.io/) authentication plugin for [Eclipse Mosquitto 2](ht
 Installing mosquitto-ami-auth
 =============================
 
-* Requierments:
+* Requirements:
 
 Make sure that [Eclipse Mosquitto 2](https://www.mosquitto.org/), [gcc](https://www.gnu.org/software/gcc/) / [clang](https://clang.llvm.org/), [cmake](https://cmake.org/) and [make](https://www.gnu.org/software/make/) are installed:
 ```bash
