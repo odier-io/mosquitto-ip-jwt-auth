@@ -147,11 +147,11 @@ int mosquitto_plugin_init(
 	{
 		/**/ if(strcmp(opts[i].key, "allowed_ips") == 0)
 		{
-			ALLOWED_IPS = opts[i].value;
+			/*ALLOWED_IPS = opts[i].value;*/
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
-			/*JWT_SECRET_KEY = opts[i].value;*/
+			JWT_SECRET_KEY = opts[i].value;
 		}
 	}
 
