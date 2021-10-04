@@ -63,7 +63,7 @@ plugin_opt_jwt_validate_exp <0|1>
 plugin_opt_jwt_validate_iat <0|1>
 ```
 
-† Warning: 64 IPs max.
+> † Warning: 64 IPs max.
 
 JWT details
 ===========
