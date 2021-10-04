@@ -29,10 +29,6 @@ static int check_ip(const char *ips[], const char *ip)
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	mosquitto_log_printf(MOSQ_LOG_INFO, "Check IP: %s\n", ip);
-
-	/*----------------------------------------------------------------------------------------------------------------*/
-
 	for(int i = 0; i < 64 && ips[i] != NULL; i++)
 	{
 		mosquitto_log_printf(MOSQ_LOG_INFO, " -> with IP: %s\n", ips[i]);
@@ -50,12 +46,8 @@ static int check_ip(const char *ips[], const char *ip)
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int check_jwt(const char *key, const char *issuer, const char *username, const char *password, int validate_exp, int validate_iat)
+static int check_jwt(const char *secret_key, const char *issuer, const char *username, const char *password, int validate_exp, int validate_iat)
 {
-	/*----------------------------------------------------------------------------------------------------------------*/
-
-	mosquitto_log_printf(MOSQ_LOG_INFO, "Check login/token: %s, %s\n", username, password);
-
 	/*----------------------------------------------------------------------------------------------------------------*/
 
 	struct l8w8jwt_decoding_params decoding_params;
@@ -67,8 +59,8 @@ static int check_jwt(const char *key, const char *issuer, const char *username, 
 	decoding_params.jwt        = (char *) password;
 	decoding_params.jwt_length = strlen(password);
 
-	decoding_params.verification_key        = (char *) JWT_SECRET_KEY;
-	decoding_params.verification_key_length = strlen(JWT_SECRET_KEY);
+	decoding_params.verification_key        = (char *) secret_key;
+	decoding_params.verification_key_length = strlen(secret_key);
 
 	decoding_params.validate_iss = (char *)  issuer ;
 	decoding_params.validate_sub = (char *) username;
@@ -85,10 +77,7 @@ static int check_jwt(const char *key, const char *issuer, const char *username, 
 
 	int decode_result = l8w8jwt_decode(&decoding_params, &validation_result, NULL, NULL);
 
-	return decode_result == L8W8JWT_SUCCESS
-	       &&
-	       validation_result == L8W8JWT_VALID
-	;
+	return decode_result == L8W8JWT_SUCCESS && validation_result == L8W8JWT_VALID;
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 }
@@ -160,16 +149,12 @@ int mosquitto_plugin_init(
 		{
 			int j = 0;
 
-			const char *sep = " ";
-
 			/*-*/ char *word, *brkt, *test = strdup(opts[i].value);
 
-			for(word = strtok_r(test, sep, &brkt);
+			for(word = strtok_r(test, " ", &brkt);
 			    j++ < 64 && word != NULL;
-			    word = strtok_r(NULL, sep, &brkt)
+			    word = strtok_r(NULL, " ", &brkt)
 			) {
-				mosquitto_log_printf(MOSQ_LOG_INFO, "GAGAGOGO: '%s'\n", word);
-
 				ALLOWED_IPS[i] = word;
 			}
 
