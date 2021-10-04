@@ -160,13 +160,13 @@ int mosquitto_plugin_init(
 		{
 			int j = 0;
 
-			/*-*/ char *test = strdup(opts[i].value);
+			const char *sep = " ";
 
-			const char *separator = " ", *brkt;
+			/*-*/ char *word, *brkt, *test = strdup(opts[i].value);
 
-			for(word = strtok_r(test, separator, &brkt);
+			for(word = strtok_r(test, sep, &brkt);
 			    j++ < 64 && word != NULL;
-			    word = strtok_r(NULL, separator, &brkt)
+			    word = strtok_r(NULL, sep, &brkt)
 			) {
 				mosquitto_log_printf(MOSQ_LOG_INFO, "GAGAGOGO: %s\n", word);
 
