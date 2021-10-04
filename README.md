@@ -20,8 +20,8 @@
 	<img src="http://ami.in2p3.fr/docs/images/logo_cern.png" alt="CERN" height="72" />
 </a>
 
-Whaat is mosquitto-ami-auth?
-============================
+What is mosquitto-ami-auth?
+===========================
 
 IP and JWT authentication plugin for [Eclipse Mosquitto 2](https://mosquitto.org/).
 
