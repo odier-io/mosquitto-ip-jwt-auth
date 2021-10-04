@@ -25,6 +25,8 @@ What is mosquitto-ami-auth?
 
 IP and JWT authentication plugin for [Eclipse Mosquitto 2](https://mosquitto.org/).
 
+![JWT](http://jwt.io/img/badge-compatible.svg)
+
 Installing mosquitto-ami-auth
 =============================
 
@@ -64,7 +66,7 @@ plugin_opt_jwt_validate_iat <0|1>
 JWT mandatory entries
 =====================
 
-
+Supported algorithms: 
 
 Developer
 =========
