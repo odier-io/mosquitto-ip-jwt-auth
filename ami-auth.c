@@ -14,7 +14,7 @@ static mosquitto_plugin_id_t *plugin_id = NULL;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static const char **IPS = {
+static const char *IPS[] = {
 	"",
 	NULL,
 };
