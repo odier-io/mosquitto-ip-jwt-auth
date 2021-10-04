@@ -71,8 +71,8 @@ JWT details
 Supported signing algorithms: HS256, HS384, HS512, PS256, PS384, PS512, RS256, RS384, RS512, ES256, ES256K, ES384, ES512, EdDSA.
 
 MQTT authenticcation:
-  - the issuer is the username,
-  - the tooken is the password.
+  - the subject is the username,
+  - the token is the password.
 
 Madatory JWT payload data entries:
 ```json
