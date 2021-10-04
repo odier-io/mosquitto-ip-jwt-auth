@@ -157,7 +157,9 @@ int mosquitto_plugin_init(
 
 			char *word, *brkt;
 
-			buff = strcpy(mosquitto_malloc(strlen(opts[i].value)), opts[i].value);
+			buff = strcpy(mosquitto_malloc(strlen(opts[i].value) + 1), opts[i].value);
+
+			/**/
 
 			for(word = strtok_r(buff, " ", &brkt);
 			    j < 64 && word != NULL;
