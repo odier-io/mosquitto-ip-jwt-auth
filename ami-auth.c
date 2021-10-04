@@ -15,9 +15,9 @@ static const char *ALLOWED_IPS[64] = { NULL };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static const char *JWT_SECRET_KEY = ( "" );
+static const char *JWT_SECRET_KEY = "";
 
-static const char *JWT_ISSUER = ( "" );
+static const char *JWT_ISSUER = "";
 
 static int JWT_VALIDATE_EXP = 0;
 
@@ -31,8 +31,6 @@ static int check_ip(const char *ips[], const char *ip)
 
 	for(int i = 0; i < 64 && ips[i] != NULL; i++)
 	{
-		mosquitto_log_printf(MOSQ_LOG_INFO, "Testing IP: %s <> %s\n", ips[i], ip);
-
 		if(strcmp(ips[i], ip) == 0)
 		{
 			return 1;
@@ -143,13 +141,19 @@ int mosquitto_plugin_init(
 	struct mosquitto_opt *opts,
 	int opt_count
 ) {
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Using `mosquitto-ami-auth` :D");
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+
 	for(int i = 0; i < opt_count; i++)
 	{
 		/**/ if(strcmp(opts[i].key, "allowed_ips") == 0)
 		{
 			int j = 0;
 
-			/*-*/ char *word, *brkt, *test = strdup(opts[i].value);
+			char *word, *brkt, *test = strdup(opts[i].value);
 
 			for(word = strtok_r(test, " ", &brkt);
 			    j < 64 && word != NULL;
@@ -178,7 +182,11 @@ int mosquitto_plugin_init(
 		}
 	}
 
+	/*----------------------------------------------------------------------------------------------------------------*/
+
 	return mosquitto_callback_register(plugin_id = identifier, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL, NULL);
+
+	/*----------------------------------------------------------------------------------------------------------------*/
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -189,7 +197,11 @@ int mosquitto_plugin_cleanup(
 	struct mosquitto_opt *opts,
 	int opt_count
 ) {
+	/*----------------------------------------------------------------------------------------------------------------*/
+
 	return mosquitto_callback_unregister(/*--*/ plugin_id /*--*/, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL /**/);
+
+	/*----------------------------------------------------------------------------------------------------------------*/
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
