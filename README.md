@@ -52,7 +52,7 @@ make deps all
 ```
 plugin <install_path>/ami-auth.so
 
-plugin_opt_allowed_ips <my_ip1> <my_ip2> <...>
+plugin_opt_allowed_ips <my_ip1> <my_ip2> <...> †
 
 plugin_opt_jwt_secret_key <my_secret_key>
 
@@ -62,6 +62,8 @@ plugin_opt_jwt_validate_exp <0|1>
 
 plugin_opt_jwt_validate_iat <0|1>
 ```
+
+† Warning: 64 IPs max.
 
 JWT details
 ===========
