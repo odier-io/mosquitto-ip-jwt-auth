@@ -155,10 +155,10 @@ int mosquitto_plugin_init(
 			    j++ < 64 && word != NULL;
 			    word = strtok_r(NULL, " ", &brkt)
 			) {
-				ALLOWED_IPS[i] = word;
+				ALLOWED_IPS[j] = word;
 			}
 
-			ALLOWED_IPS[i] = NULL;
+			ALLOWED_IPS[j] = NULL;
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
