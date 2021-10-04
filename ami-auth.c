@@ -1,5 +1,6 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
 
+#include <stdlib.h>
 #include <string.h>
 
 #include <mosquitto.h>
@@ -10,13 +11,17 @@
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static mosquitto_plugin_id_t *plugin_id = NULL;
+static const char *ALLOWED_IPS[64] = { NULL };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static const char *ALLOWED_IPS[64] = { NULL };
-
 static const char *JWT_SECRET_KEY = ( "" );
+
+static const char *JWT_ISSUER = ( "" );
+
+static int JWT_VALIDATE_EXP = 0;
+
+static int JWT_VALIDATE_IAT = 0;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -106,7 +111,7 @@ static int basic_auth_callback(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_jwt(JWT_SECRET_KEY, "AMI", basic_auth->username, basic_auth->password, 0, 0))
+	if(check_jwt(JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_EXP, JWT_VALIDATE_IAT))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
@@ -137,6 +142,10 @@ mosq_plugin_EXPORT int mosquitto_plugin_version(
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
+static mosquitto_plugin_id_t *plugin_id = NULL;
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
 int mosquitto_plugin_init(
 	mosquitto_plugin_id_t *identifier,
 	void **user_data,
@@ -152,6 +161,18 @@ int mosquitto_plugin_init(
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
 			JWT_SECRET_KEY = opts[i].value;
+		}
+		else if(strcmp(opts[i].key, "jwt_issuer") == 0)
+		{
+			JWT_ISSUER = opts[i].value;
+		}
+		else if(strcmp(opts[i].key, "jwt_validate_exp") == 0)
+		{
+			JWT_VALIDATE_EXP = atoi(opts[i].value);
+		}
+		else if(strcmp(opts[i].key, "jwt_validate_iat") == 0)
+		{
+			JWT_VALIDATE_IAT = atoi(opts[i].value);
 		}
 	}
 
