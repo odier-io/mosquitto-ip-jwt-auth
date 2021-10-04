@@ -55,6 +55,10 @@ plugin_opt_allowed_ips <my_ip1> <my_ip2> <...>
 plugin_opt_jwt_secret_key <my_secret_key>
 
 plugin_opt_jwt_issuer <my_issuer>
+
+plugin_opt_jwt_validate_exp <0|1>
+
+plugin_opt_jwt_validate_iat <0|1>
 ```
 
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt
