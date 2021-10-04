@@ -61,5 +61,15 @@ plugin_opt_jwt_validate_exp <0|1>
 plugin_opt_jwt_validate_iat <0|1>
 ```
 
+JWT mandatory entries
+=====================
+
+
+
+Developer
+=========
+
+* Jérôme ODIER (CNRS/LPSC)
+
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt
 [License img]:https://img.shields.io/badge/license-CeCILL--C-blue.svg
