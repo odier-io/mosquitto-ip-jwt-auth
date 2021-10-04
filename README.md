@@ -72,7 +72,7 @@ MQTT authenticcation:
   - the issuer is the username,
   - the tooken is the password.
 
-Madatory payload data entries:
+Madatory JWT payload data entries:
 ```json
 {
 	"iss": "<issuer>",
