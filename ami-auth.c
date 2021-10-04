@@ -168,7 +168,7 @@ int mosquitto_plugin_init(
 			    j++ < 64 && word != NULL;
 			    word = strtok_r(NULL, sep, &brkt)
 			) {
-				mosquitto_log_printf(MOSQ_LOG_INFO, "GAGAGOGO: %s\n", word);
+				mosquitto_log_printf(MOSQ_LOG_INFO, "GAGAGOGO: '%s'\n", word);
 
 				ALLOWED_IPS[i] = word;
 			}
