@@ -48,14 +48,14 @@ then
   ######################################################################################################################
 
   mkdir -p $MOSQUITTO_AMI_HOME/lib/
-  mkdir -p $MOSQUITTO_AMI_HOME/include/
+  mkdir -p $MOSQUITTO_AMI_HOME/include/l8w8jwt/
 
   cp $MOSQUITTO_AMI_HOME/l8w8jwt/build/mbedtls/library/libmbedcrypto.a $MOSQUITTO_AMI_HOME/lib/
   cp $MOSQUITTO_AMI_HOME/l8w8jwt/build/mbedtls/library/libmbedtls.a $MOSQUITTO_AMI_HOME/lib/
   cp $MOSQUITTO_AMI_HOME/l8w8jwt/build/mbedtls/library/libmbedx509.a $MOSQUITTO_AMI_HOME/lib/
   cp $MOSQUITTO_AMI_HOME/l8w8jwt/build/l8w8jwt/bin/release/libl8w8jwt.a $MOSQUITTO_AMI_HOME/lib/
 
-  cp -R $MOSQUITTO_AMI_HOME/l8w8jwt/build/l8w8jwt/include/ $MOSQUITTO_AMI_HOME/include/
+  cp -R $MOSQUITTO_AMI_HOME/l8w8jwt/build/l8w8jwt/include/l8w8jwt/*.h $MOSQUITTO_AMI_HOME/include/l8w8jwt/
 
   ######################################################################################################################
 ) || exit 1
