@@ -82,7 +82,7 @@ static int check_jwt(const char *secret_key, const char *issuer, const char *use
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int basic_auth_callback(
+static int auth_callback(
 	int event,
 	void *event_data,
 	void *userdata
@@ -184,7 +184,7 @@ int mosquitto_plugin_init(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	return mosquitto_callback_register(plugin_id = identifier, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL, NULL);
+	return mosquitto_callback_register(plugin_id = identifier, MOSQ_EVT_BASIC_AUTH, auth_callback, NULL, NULL);
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 }
@@ -199,7 +199,7 @@ int mosquitto_plugin_cleanup(
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	return mosquitto_callback_unregister(/*--*/ plugin_id /*--*/, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL /**/);
+	return mosquitto_callback_unregister(/*--*/ plugin_id /*--*/, MOSQ_EVT_BASIC_AUTH, auth_callback, NULL /**/);
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 }
