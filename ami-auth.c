@@ -28,7 +28,7 @@ static int check_ip(const char **ips, const char *ip)
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	char *allowed_ip, *rest = ALLOWED_IPS;
+	char *allowed_ip, *rest = ips;
 
 	while((allowed_ip = strtok_r(rest, ",", &rest)) != NULL)
 	{
@@ -98,14 +98,14 @@ static int basic_auth_callback(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_ip(IPS, mosquitto_client_address(basic_auth->client)))
+	if(check_ip(ALLOWED_IPS, mosquitto_client_address(basic_auth->client)))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_jwt(KEY, "AMI", basic_auth->username, basic_auth->password, 0, 0))
+	if(check_jwt(JWT_SECRET_KEY, "AMI", basic_auth->username, basic_auth->password, 0, 0))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
