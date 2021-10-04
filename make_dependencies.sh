@@ -55,7 +55,7 @@ then
   cp $MOSQUITTO_AMI_HOME/l8w8jwt/build/mbedtls/library/libmbedx509.a $MOSQUITTO_AMI_HOME/lib/
   cp $MOSQUITTO_AMI_HOME/l8w8jwt/build/l8w8jwt/bin/release/libl8w8jwt.a $MOSQUITTO_AMI_HOME/lib/
 
-  cp -R $MOSQUITTO_AMI_HOME/l8w8jwt/build/l8w8jwt/include/l8w8jwt/ $MOSQUITTO_AMI_HOME/include/
+  cp -R $MOSQUITTO_AMI_HOME/l8w8jwt/build/l8w8jwt/include/ $MOSQUITTO_AMI_HOME/include/
 
   ######################################################################################################################
 ) || exit 1
