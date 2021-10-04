@@ -23,6 +23,8 @@
 mosquitto-ami-auth
 ==================
 
+IP and JWT authentication plugin for [Eclipse Mosquitto](https://mosquitto.org/).
+
 Installing mosquitto-ami-auth
 =============================
 
