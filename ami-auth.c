@@ -152,13 +152,13 @@ int mosquitto_plugin_init(
 			/*-*/ char *word, *brkt, *test = strdup(opts[i].value);
 
 			for(word = strtok_r(test, " ", &brkt);
-			    j++ < 64 && word != NULL;
+			    j < 64 && word != NULL;
 			    word = strtok_r(NULL, " ", &brkt)
 			) {
-				ALLOWED_IPS[j] = word;
+				ALLOWED_IPS[j++] = word;
 			}
 
-			ALLOWED_IPS[j] = NULL;
+			ALLOWED_IPS[j++] = NULL;
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
