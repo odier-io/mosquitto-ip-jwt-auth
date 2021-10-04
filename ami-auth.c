@@ -68,8 +68,8 @@ static int check_jwt(const char *key, const char *issuer, const char *username, 
 	decoding_params.verification_key        = (char *) key;
 	decoding_params.verification_key_length = strlen(key);
 
-	decoding_params.validate_iss =  issuer ;
-	decoding_params.validate_sub = username;
+	decoding_params.validate_iss = (char *)  issuer ;
+	decoding_params.validate_sub = (char *) username;
 
 	decoding_params.validate_exp = validate_exp;
 	decoding_params.exp_tolerance_seconds = 60;
