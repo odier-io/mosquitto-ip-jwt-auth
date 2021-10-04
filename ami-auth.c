@@ -14,13 +14,13 @@ static mosquitto_plugin_id_t *plugin_id = NULL;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static const char *ALLOWED_IPS = "";
+static const char *ALLOWED_IPS[64] = { NULL };
 
-static const char *JWT_SECRET_KEY = "";
+static const char *JWT_SECRET_KEY = ( "" );
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int check_ip(const char *ips, const char *ip)
+static int check_ip(const char *ips[], const char *ip)
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -28,11 +28,12 @@ static int check_ip(const char *ips, const char *ip)
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	const char *allowed_ip, *rest = ips;
-
-	while((allowed_ip = strtok_r(rest, ",", &rest)) != NULL)
+	for(int i = 0; i < 64 && ips[i] != NULL; i++)
 	{
-		mosquitto_log_printf(MOSQ_LOG_INFO, "Check %s <> %s\n", allowed_ip, ip);
+		if(strcmp(ips[i], ip) == 0)
+		{
+			return 1;
+		}
 	}
 
 	return 0;
@@ -150,7 +151,7 @@ int mosquitto_plugin_init(
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
-			JWT_SECRET_KEY = opts[i].value;
+			/*JWT_SECRET_KEY = opts[i].value;*/
 		}
 	}
 
