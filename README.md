@@ -63,10 +63,19 @@ plugin_opt_jwt_validate_exp <0|1>
 plugin_opt_jwt_validate_iat <0|1>
 ```
 
-JWT mandatory entries
-=====================
+JWT details
+===========
 
 Supported signing algorithms: HS256, HS384, HS512, PS256, PS384, PS512, RS256, RS384, RS512, ES256, ES256K, ES384, ES512, EdDSA.
+
+Madatory payload data entries :
+```json
+{
+	"iss": "<issuer>",
+	"sub": "<subject>",
+	"uuid": "<a_universally_unique_identifier>"
+}
+```
 
 Developer
 =========
