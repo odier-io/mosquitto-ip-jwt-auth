@@ -170,6 +170,8 @@ int mosquitto_plugin_init(
 			) {
 				ALLOWED_IPS[i] = word;
 			}
+
+			ALLOWED_IPS[i] = NULL;
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
