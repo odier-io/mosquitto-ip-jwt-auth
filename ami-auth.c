@@ -131,7 +131,7 @@ mosq_plugin_EXPORT int mosquitto_plugin_version(
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static const char *buff = NULL;
+static char *buff = NULL;
 
 static mosquitto_plugin_id_t *plugin_id = NULL;
 
