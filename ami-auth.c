@@ -151,6 +151,8 @@ int mosquitto_plugin_init(
 
 	int i;
 
+	mosquitto_log_printf(MOSQ_LOG_INFO, "opt_count: %d\n", opt_count);
+
 	for(i = 0; i < opt_count; i++)
 	{
 		mosquitto_log_printf(MOSQ_LOG_INFO, "key: %s, val: %s\n", opts[i].key, opts[i].value);
