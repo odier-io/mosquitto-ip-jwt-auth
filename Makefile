@@ -1,4 +1,4 @@
-all:
+qall:
 	gcc -std=c99 -O3 -fPIC -shared -I ./include -D_POSIX_C_SOURCE -o ./ami-auth.so ./ami-auth.c \
 ./lib/libl8w8jwt.a \
 ./lib/libmbedcrypto.a \
