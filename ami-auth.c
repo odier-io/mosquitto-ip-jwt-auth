@@ -62,10 +62,10 @@ static int check_jwt(const char *key, const char *issuer, const char *username, 
 
 	decoding_params.alg = L8W8JWT_ALG_HS512;
 
-	decoding_params.jwt        = /*--*/(password);
+	decoding_params.jwt        = (char *) password;
 	decoding_params.jwt_length = strlen(password);
 
-	decoding_params.verification_key        = /*--*/(key);
+	decoding_params.verification_key        = (char *) key;
 	decoding_params.verification_key_length = strlen(key);
 
 	decoding_params.validate_iss =  issuer ;
