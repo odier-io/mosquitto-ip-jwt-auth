@@ -148,7 +148,7 @@ int mosquitto_plugin_init(
 	struct mosquitto_opt *opts,
 	int opt_count
 ) {
-	return mosquitto_callback_register(mosq_pid = identifier, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL, NULL);
+	return mosquitto_callback_register(plugin_id = identifier, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL, NULL);
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
