@@ -23,7 +23,7 @@
 What is mosquitto-ami-auth?
 ===========================
 
-IP and JWT authentication plugin for [Eclipse Mosquitto 2](https://mosquitto.org/).
+IP and [JWT](https://jwt.io/) authentication plugin for [Eclipse Mosquitto 2](https://mosquitto.org/).
 
 ![JWT](http://jwt.io/img/badge-compatible.svg)
 
