@@ -148,17 +148,26 @@ int mosquitto_plugin_init(
 	struct mosquitto_opt *opts,
 	int opt_count
 ) {
+
+	int i;
+
+	for(i = 0; i < opt_count; i++)
+	{
+		mosquitto_log_printf(MOSQ_LOG_INFO, "key: %s, val: %s\n", opts[i].key, opts[i].value);
+	}
+
 	return mosquitto_callback_register(plugin_id = identifier, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL, NULL);
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 int mosquitto_plugin_cleanup(
-	void *user_data,
+/*	mosquitto_plugin_id_t *identifier,
+ */	void *user_data,
 	struct mosquitto_opt *opts,
 	int opt_count
 ) {
-	return mosquitto_callback_unregister(plugin_id = plugin_id, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL /**/);
+	return mosquitto_callback_unregister(/*--*/ plugin_id /*--*/, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL /**/);
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
