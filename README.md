@@ -30,8 +30,9 @@ Installing mosquitto-ami-auth
 
 * Requierments:
 
-Make sure that [gcc](https://www.gnu.org/software/gcc/) or [clang](https://clang.llvm.org/), [cmake](https://cmake.org/) and [make](https://www.gnu.org/software/make/) are installed:
+Make sure that [Eclipse Mosquitto](https://mosquitto.org/), [gcc](https://www.gnu.org/software/gcc/) or [clang](https://clang.llvm.org/), [cmake](https://cmake.org/) and [make](https://www.gnu.org/software/make/) are installed:
 ```bash
+mosquitto --version
 gcc --version
 cmake --version
 make --version
