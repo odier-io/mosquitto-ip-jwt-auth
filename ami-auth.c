@@ -31,7 +31,7 @@ static int check_ip(const char *ips[], const char *ip)
 
 	for(int i = 0; i < 64 && ips[i] != NULL; i++)
 	{
-		mosquitto_log_printf(MOSQ_LOG_INFO, " -> with IP: %s\n", ips[i]);
+		mosquitto_log_printf(MOSQ_LOG_INFO, "Testing IP: %s <> %s\n", ips[i], ip);
 
 		if(strcmp(ips[i], ip) == 0)
 		{
