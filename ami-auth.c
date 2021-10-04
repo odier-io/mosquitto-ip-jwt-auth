@@ -15,9 +15,9 @@ static const char *ALLOWED_IPS[64] = { NULL };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static const char *JWT_SECRET_KEY = "";
+static const char *JWT_SECRET_KEY = "E7F66F88_9DC9_8697_17DD_E292BFFBEE16";
 
-static const char *JWT_ISSUER = "";
+static const char *JWT_ISSUER = "D51D9082_2BB3_B3F8_7FC4_6275B034A09D";
 
 static int JWT_VALIDATE_EXP = 0;
 
