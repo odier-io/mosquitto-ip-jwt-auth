@@ -50,7 +50,7 @@ make deps all
 ```
 plugin <install_path>/ami-auth.so
 
-plugin_opt_allowed_ips <ip1> <ip2> <...>
+plugin_opt_allowed_ips <my_ip1> <my_ip2> <...>
 
 plugin_opt_jwt_secret_key <my_secret_key>
 
