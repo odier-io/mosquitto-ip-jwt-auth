@@ -14,14 +14,9 @@ static mosquitto_plugin_id_t *plugin_id = NULL;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static const char *IPS[] = {
-	"",
-	NULL,
-};
+static const char *ALLOWED_IPS = "";
 
-/*--------------------------------------------------------------------------------------------------------------------*/
-
-static const char *KEY = "YoUR sUpEr S3krEt 1337 HMAC kEy HeRE";
+static const char *JWT_SECRET_KEY = "";
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -33,12 +28,11 @@ static int check_ip(const char **ips, const char *ip)
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	for(; *ips != NULL; ips++)
+	char *allowed_ip, *rest = ALLOWED_IPS;
+
+	while((allowed_ip = strtok(rest, ",", &rest)) != NULL)
 	{
-		if(strcmp(*ips, ip) == 0)
-		{
-			return 1;
-		}
+		mosquitto_log_printf(MOSQ_LOG_INFO, "Check %s <> %s\n", allowed_ip, ip);
 	}
 
 	return 0;
@@ -65,8 +59,8 @@ static int check_jwt(const char *key, const char *issuer, const char *username, 
 	decoding_params.jwt        = (char *) password;
 	decoding_params.jwt_length = strlen(password);
 
-	decoding_params.verification_key        = (char *) key;
-	decoding_params.verification_key_length = strlen(key);
+	decoding_params.verification_key        = (char *) JWT_SECRET_KEY;
+	decoding_params.verification_key_length = strlen(JWT_SECRET_KEY);
 
 	decoding_params.validate_iss = (char *)  issuer ;
 	decoding_params.validate_sub = (char *) username;
@@ -148,14 +142,16 @@ int mosquitto_plugin_init(
 	struct mosquitto_opt *opts,
 	int opt_count
 ) {
-
-	int i;
-
-	mosquitto_log_printf(MOSQ_LOG_INFO, "opt_count: %d\n", opt_count);
-
-	for(i = 0; i < opt_count; i++)
+	for(int i = 0; i < opt_count; i++)
 	{
-		mosquitto_log_printf(MOSQ_LOG_INFO, "key: %s, val: %s\n", opts[i].key, opts[i].value);
+		/**/ if(strcmp(opts[i].key, "allowed_ips") == 0)
+		{
+			ALLOWED_IPS = opts[i].value;
+		}
+		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
+		{
+			JWT_SECRET_KEY = opts[i].value;
+		}
 	}
 
 	return mosquitto_callback_register(plugin_id = identifier, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL, NULL);
