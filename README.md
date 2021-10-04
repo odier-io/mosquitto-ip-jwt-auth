@@ -44,5 +44,16 @@ make --version
 make deps all
 ```
 
+In `/etc/mosquitto/mosquitto.conf`:
+```
+plugin <install_path>/ami-auth.so
+
+plugin_opt_allowed_ips <ip1> <ip2> <...>
+
+plugin_opt_jwt_secret_key <my_secret_key>
+
+plugin_opt_jwt_issuer <my_issuer>
+```
+
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt
 [License img]:https://img.shields.io/badge/license-CeCILL--C-blue.svg
