@@ -20,8 +20,8 @@
 	<img src="http://ami.in2p3.fr/docs/images/logo_cern.png" alt="CERN" height="72" />
 </a>
 
-mosquitto-ami-auth
-==================
+Whaat is mosquitto-ami-auth?
+============================
 
 IP and JWT authentication plugin for [Eclipse Mosquitto 2](https://mosquitto.org/).
 
@@ -38,13 +38,15 @@ cmake --version
 make --version
 ```
 
-* Compiling and installing:
+* Compiling:
 
 ```bash
 make deps all
 ```
 
-In `/etc/mosquitto/mosquitto.conf`:
+* Configuring:
+
+`/etc/mosquitto/mosquitto.conf`:
 ```
 plugin <install_path>/ami-auth.so
 
