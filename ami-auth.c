@@ -145,7 +145,7 @@ int mosquitto_plugin_init(
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	mosquitto_log_printf(MOSQ_LOG_INFO, "Using `mosquitto-ami-auth` :D");
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Starting `mosquitto-ami-auth`...");
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -207,7 +207,11 @@ int mosquitto_plugin_cleanup(
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	mosquitto_callback_unregister(/*--*/ plugin_id /*--*/, MOSQ_EVT_BASIC_AUTH, auth_callback, NULL /**/);
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Stopping `mosquitto-ami-auth`...");
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	mosquitto_callback_unregister(plugin_id, MOSQ_EVT_BASIC_AUTH, auth_callback, NULL);
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
