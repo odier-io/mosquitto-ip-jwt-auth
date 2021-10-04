@@ -131,6 +131,8 @@ mosq_plugin_EXPORT int mosquitto_plugin_version(
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
+static const char *buff = NULL;
+
 static mosquitto_plugin_id_t *plugin_id = NULL;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -153,9 +155,11 @@ int mosquitto_plugin_init(
 		{
 			int j = 0;
 
-			char *word, *brkt, *test = strdup(opts[i].value);
+			char *word, *brkt;
 
-			for(word = strtok_r(test, " ", &brkt);
+			buff = strcpy(mosquitto_malloc(strlen(opts[i].value)), opts[i].value);
+
+			for(word = strtok_r(buff, " ", &brkt);
 			    j < 64 && word != NULL;
 			    word = strtok_r(NULL, " ", &brkt)
 			) {
@@ -184,9 +188,11 @@ int mosquitto_plugin_init(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	return mosquitto_callback_register(plugin_id = identifier, MOSQ_EVT_BASIC_AUTH, auth_callback, NULL, NULL);
+	mosquitto_callback_register(plugin_id = identifier, MOSQ_EVT_BASIC_AUTH, auth_callback, NULL, NULL);
 
 	/*----------------------------------------------------------------------------------------------------------------*/
+
+	return MOSQ_ERR_SUCCESS;
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -199,9 +205,15 @@ int mosquitto_plugin_cleanup(
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	return mosquitto_callback_unregister(/*--*/ plugin_id /*--*/, MOSQ_EVT_BASIC_AUTH, auth_callback, NULL /**/);
+	mosquitto_callback_unregister(/*--*/ plugin_id /*--*/, MOSQ_EVT_BASIC_AUTH, auth_callback, NULL /**/);
 
 	/*----------------------------------------------------------------------------------------------------------------*/
+
+	if(buff != NULL) mosquitto_free(buff);
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	return MOSQ_ERR_SUCCESS;
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
