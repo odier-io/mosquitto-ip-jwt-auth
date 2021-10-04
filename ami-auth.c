@@ -30,7 +30,7 @@ static int check_ip(const char **ips, const char *ip)
 
 	char *allowed_ip, *rest = ALLOWED_IPS;
 
-	while((allowed_ip = strtok(rest, ",", &rest)) != NULL)
+	while((allowed_ip = strtok_r(rest, ",", &rest)) != NULL)
 	{
 		mosquitto_log_printf(MOSQ_LOG_INFO, "Check %s <> %s\n", allowed_ip, ip);
 	}
