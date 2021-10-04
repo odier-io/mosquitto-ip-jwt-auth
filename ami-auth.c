@@ -156,7 +156,18 @@ int mosquitto_plugin_init(
 	{
 		/**/ if(strcmp(opts[i].key, "allowed_ips") == 0)
 		{
-			/*ALLOWED_IPS = opts[i].value;*/
+			int j = 0;
+
+			/*-*/ char *test = strdup(opts[i].value);
+
+			const char *separator = " ", *brkt;
+
+			for(word = strtok_r(test, separator, &brkt);
+			    j++ < 64 && word != NULL;
+			    word = strtok_r(NULL, separator, &brkt)
+			) {
+				ALLOWED_IPS[i] = word;
+			}
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
