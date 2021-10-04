@@ -1,3 +1,5 @@
+/*--------------------------------------------------------------------------------------------------------------------*/
+
 #include <string.h>
 
 #include <mosquitto.h>
@@ -6,53 +8,120 @@
 
 #include <l8w8jwt/decode.h>
 
-static char *KEY = "YoUR sUpEr S3krEt 1337 HMAC kEy HeRE";
+/*--------------------------------------------------------------------------------------------------------------------*/
 
-static mosquitto_plugin_id_t *mosq_pid = NULL;
+static mosquitto_plugin_id_t *plugin_id = NULL;
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+static const char **IPS = {
+	"",
+	NULL,
+};
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+static const char *KEY = "YoUR sUpEr S3krEt 1337 HMAC kEy HeRE";
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+static int check_ip(const char **ips, const char *ip)
+{
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Check IP: %s\n", ip);
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	for(; *ips != NULL; ips++)
+	{
+		if(strcmp(*ips, ip) == 0)
+		{
+			return 1;
+		}
+	}
+
+	return 0;
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+static int check_jwt(const char *key, const char *issuer, const char *username, const char *password, int validate_exp, int validate_iat)
+{
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Check login/token: %s, %s\n", username, password);
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	struct l8w8jwt_decoding_params decoding_params;
+
+	l8w8jwt_decoding_params_init(&decoding_params);
+
+	decoding_params.alg = L8W8JWT_ALG_HS512;
+
+	decoding_params.jwt        = /*--*/(password);
+	decoding_params.jwt_length = strlen(password);
+
+	decoding_params.verification_key        = /*--*/(key);
+	decoding_params.verification_key_length = strlen(key);
+
+	decoding_params.validate_iss =  issuer ;
+	decoding_params.validate_sub = username;
+
+	decoding_params.validate_exp = validate_exp;
+	decoding_params.exp_tolerance_seconds = 60;
+
+	decoding_params.validate_iat = validate_iat;
+	decoding_params.iat_tolerance_seconds = 60;
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	enum l8w8jwt_validation_result validation_result;
+
+	int decode_result = l8w8jwt_decode(&decoding_params, &validation_result, NULL, NULL);
+
+	return decode_result == L8W8JWT_SUCCESS
+	       &&
+	       validation_result == L8W8JWT_VALID
+	;
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
 
 static int basic_auth_callback(
 	int event,
 	void *event_data,
 	void *userdata
 ) {
+	/*----------------------------------------------------------------------------------------------------------------*/
+
 	struct mosquitto_evt_basic_auth *basic_auth = (struct mosquitto_evt_basic_auth *) event_data;
 
-	const char *ip = mosquitto_client_address(basic_auth->client);
+	/*----------------------------------------------------------------------------------------------------------------*/
 
-	mosquitto_log_printf(MOSQ_LOG_INFO, "IP: %s, Username: %s, Password: %s\n", ip, basic_auth->username, basic_auth->password);
-
-	struct l8w8jwt_decoding_params params;
-
-	l8w8jwt_decoding_params_init(&params);
-
-	params.alg = L8W8JWT_ALG_HS512;
-
-	params.jwt        = /*--*/(basic_auth->password);
-	params.jwt_length = strlen(basic_auth->password);
-
-	params.verification_key        = /*--*/(KEY);
-	params.verification_key_length = strlen(KEY);
-
-	params.validate_iss = /*---*/ "AMI" /*---*/;
-	params.validate_sub = basic_auth->username;
-
-	params.validate_exp = 0;
-	params.exp_tolerance_seconds = 60;
-
-	params.validate_iat = 0;
-	params.iat_tolerance_seconds = 60;
-
-	enum l8w8jwt_validation_result validation_result;
-
-	int decode_result = l8w8jwt_decode(&params, &validation_result, NULL, NULL);
-
-	if(decode_result == L8W8JWT_SUCCESS && validation_result == L8W8JWT_VALID)
+	if(check_ip(IPS, mosquitto_client_address(basic_auth->client)))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
 
+	/*----------------------------------------------------------------------------------------------------------------*/
+
+	if(check_jwt(KEY, "AMI", basic_auth->username, basic_auth->password, 0, 0))
+	{
+		return MOSQ_ERR_SUCCESS;
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------*/
+
 	return MOSQ_ERR_AUTH;
 }
+
+/*--------------------------------------------------------------------------------------------------------------------*/
 
 mosq_plugin_EXPORT int mosquitto_plugin_version(
 	/*-*/ int supported_version_count,
@@ -71,25 +140,25 @@ mosq_plugin_EXPORT int mosquitto_plugin_version(
 	return -1;
 }
 
+/*--------------------------------------------------------------------------------------------------------------------*/
+
 int mosquitto_plugin_init(
 	mosquitto_plugin_id_t *identifier,
 	void **user_data,
 	struct mosquitto_opt *opts,
 	int opt_count
 ) {
-	mosq_pid = identifier;
-
-	return mosquitto_callback_register(mosq_pid, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL, NULL);
+	return mosquitto_callback_register(mosq_pid = identifier, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL, NULL);
 }
 
+/*--------------------------------------------------------------------------------------------------------------------*/
+
 int mosquitto_plugin_cleanup(
-        /*------------------------------*/
 	void *user_data,
 	struct mosquitto_opt *opts,
 	int opt_count
 ) {
-	/*------------------*/
-
-	return mosquitto_callback_unregister(mosq_pid, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL /**/);
+	return mosquitto_callback_unregister(plugin_id = plugin_id, MOSQ_EVT_BASIC_AUTH, basic_auth_callback, NULL /**/);
 }
 
+/*--------------------------------------------------------------------------------------------------------------------*/
