@@ -28,7 +28,7 @@ static int check_ip(const char **ips, const char *ip)
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	char *allowed_ip, *rest = ips;
+	const char *allowed_ip, *rest = ips;
 
 	while((allowed_ip = strtok_r(rest, ",", &rest)) != NULL)
 	{
