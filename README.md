@@ -25,7 +25,7 @@ What is mosquitto-ami-auth?
 
 IP and [JWT](https://jwt.io/) authentication plugin for [Eclipse Mosquitto 2](https://mosquitto.org/).
 
-![JWT](http://jwt.io/img/badge-compatible.svg)
+[![JWT](http://jwt.io/img/badge-compatible.svg)](https://jwt.io/)
 
 Installing mosquitto-ami-auth
 =============================
@@ -72,8 +72,7 @@ Madatory payload data entries :
 ```json
 {
 	"iss": "<issuer>",
-	"sub": "<subject>",
-	"uuid": "<a_universally_unique_identifier>"
+	"sub": "<subject>"
 }
 ```
 
