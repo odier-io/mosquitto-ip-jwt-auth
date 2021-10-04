@@ -32,7 +32,7 @@ Installing mosquitto-ami-auth
 
 * Requierments:
 
-Make sure that [Eclipse Mosquitto 2](https://mosquitto.org/), [gcc](https://www.gnu.org/software/gcc/) or [clang](https://clang.llvm.org/), [cmake](https://cmake.org/) and [make](https://www.gnu.org/software/make/) are installed:
+Make sure that [Eclipse Mosquitto 2](https://www.mosquitto.org/), [gcc](https://www.gnu.org/software/gcc/) or [clang](https://clang.llvm.org/), [cmake](https://cmake.org/) and [make](https://www.gnu.org/software/make/) are installed:
 ```bash
 mosquitto --version
 gcc --version
@@ -80,7 +80,7 @@ Madatory payload data entries :
 Developer
 =========
 
-* Jérôme ODIER (CNRS/LPSC)
+* [Jérôme ODIER](https://www.odier.xyz/) ([CNRS/LPSC](http://lpsc.in2p3.fr/))
 
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt
 [License img]:https://img.shields.io/badge/license-CeCILL--C-blue.svg
