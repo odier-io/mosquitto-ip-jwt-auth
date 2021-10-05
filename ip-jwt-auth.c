@@ -50,7 +50,7 @@ static int check_ip(const char *ips[], const char *ip)
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int check_jwt(const char *secret_key, const char *issuer, const char *username, const char *password, int validate_exp, int validate_iat)
+static int check_jwt(int signing_alg, const char *secret_key, const char *issuer, const char *username, const char *password, int validate_exp, int validate_iat)
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -58,7 +58,7 @@ static int check_jwt(const char *secret_key, const char *issuer, const char *use
 
 	l8w8jwt_decoding_params_init(&decoding_params);
 
-	decoding_params.alg = L8W8JWT_ALG_HS512;
+	decoding_params.alg = signing_alg;
 
 	decoding_params.jwt        = (char *) password;
 	decoding_params.jwt_length = strlen(password);
