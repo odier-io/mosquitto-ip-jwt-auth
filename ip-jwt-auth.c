@@ -323,8 +323,7 @@ int mosquitto_plugin_init(
 			else if(strcmp(opts[i].value, "EdDSA") == 0) {
 				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_ED25519;
 			}
-			else
-			{
+			else {
 				mosquitto_log_printf(MOSQ_LOG_ERR, "Invalid JWT signing algorithm `%s`, will use `%s`", opts[i].value, "HS512");
 			}
 		}
@@ -334,7 +333,11 @@ int mosquitto_plugin_init(
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
-			JWT_SECRET_KEY = /*------*/(opts[i].value);
+			JWT_SECRET_KEY = opts[i].value;
+		}
+		else if(strcmp(opts[i].key, "jwt_b64_issuer") == 0)
+		{
+			JWT_ISSUER = b64_decode(opts[i].value);
 		}
 		else if(strcmp(opts[i].key, "jwt_issuer") == 0)
 		{
