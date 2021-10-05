@@ -79,7 +79,7 @@ plugin_opt_jwt_validate_exp 1
 Developer
 =========
 
-* [Jérôme ODIER](https://www.odier.xyz/)
+* [Jérôme ODIER](https://www.odier.xyz/) ([CNRS/LPSC](http://lpsc.in2p3.fr/))
 
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt
 [License img]:https://img.shields.io/badge/license-CeCILL--C-blue.svg
