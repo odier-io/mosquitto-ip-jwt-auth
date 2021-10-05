@@ -86,7 +86,7 @@ Developer
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt
 [License img]:https://img.shields.io/badge/license-CeCILL--C-blue.svg
 
-[MainRepo]:https://gitlab.in2p3.fr/jodier/mosquitto-ami-auth/
+[MainRepo]:https://gitlab.in2p3.fr/ami-team/mosquitto-ami-auth/
 [MainRepo img]:https://img.shields.io/badge/Main%20Repo-gitlab.in2p3.fr-success
 
 [AltRepo]:https://github.com/odier-io/mosquitto-ami-auth/
