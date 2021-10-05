@@ -48,17 +48,30 @@ make deps all
 
 * Configuring:
 
+| Parameter        | Is optional | Desccription                 | Default value |
+|------------------|-------------|------------------------------|---------------|
+| allowed_ips      | yes         | space-sepaarated list of IPs | *empty*       |
+| jwt_signing_alg  | yes         | See next section             | HS512         |
+| jwt_secret_key   | yes         | Free string                  | *empty*       |
+| jwt_issuer       | yes         | Free string                  | *empty*       |
+| jwt_validate_sub | yes         | 0 or 1                       | 1             |
+| jwt_validate_exp | yes         | 0 or 1                       | 0             |
+| jwt_validate_iat | yes         | 0 or 1                       | 0             |
+
+
 `/etc/mosquitto/mosquitto.conf`:
 ```
 plugin <install_path>/ip-jwt-auth.so
 
 plugin_opt_allowed_ips <my_ip1> <my_ip2> <...> †
 
-plugin_opt_jwt_signing_alg <my_signing_alg> ††
+plugin_opt_jwt_signing_alg <my_signing_alg>
 
 plugin_opt_jwt_secret_key <my_secret_key>
 
 plugin_opt_jwt_issuer <my_issuer>
+
+plugin_opt_jwt_validate_sub <0|1>
 
 plugin_opt_jwt_validate_exp <0|1>
 
@@ -66,8 +79,6 @@ plugin_opt_jwt_validate_iat <0|1>
 ```
 
 > † Warning: 64 IPs max.
-
-> †† See next section.
 
 JWT details
 ===========
@@ -89,7 +100,7 @@ Madatory JWT payload data entries:
 Developer
 =========
 
-* [Jérôme ODIER](https://www.odier.xyz/) ([CNRS/LPSC](http://lpsc.in2p3.fr/))
+* [Jérôme ODIER](https://www.odier.xyz/)
 
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt
 [License img]:https://img.shields.io/badge/license-CeCILL--C-blue.svg

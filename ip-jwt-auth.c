@@ -21,9 +21,11 @@ static const char *ALLOWED_IPS[MAX_NUMBER_OF_IPS + 1] = { NULL };
 
 static int JWT_SIGNING_ALG = L8W8JWT_ALG_HS512;
 
-static const char *JWT_SECRET_KEY = "E7F66F88_9DC9_8697_17DD_E292BFFBEE16";
+static const char *JWT_SECRET_KEY = "";
 
-static const char *JWT_ISSUER = "D51D9082_2BB3_B3F8_7FC4_6275B034A09D";
+static const char *JWT_ISSUER = "";
+
+static int JWT_VALIDATE_SUB = 0;
 
 static int JWT_VALIDATE_EXP = 0;
 
@@ -50,7 +52,7 @@ static int check_ip(const char *ips[], const char *ip)
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int check_jwt(int signing_alg, const char *secret_key, const char *issuer, const char *username, const char *password, int validate_exp, int validate_iat)
+static int check_jwt(int signing_alg, const char *secret_key, const char *issuer, const char *username, const char *password, int validate_sub, int validate_exp, int validate_iat)
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -66,8 +68,14 @@ static int check_jwt(int signing_alg, const char *secret_key, const char *issuer
 	decoding_params.verification_key        = (char *) secret_key;
 	decoding_params.verification_key_length = strlen(secret_key);
 
-	decoding_params.validate_iss = (char *)  issuer ;
-	decoding_params.validate_sub = (char *) username;
+	if(strlen(issuer) > 0) {
+		decoding_params.validate_iss = (char *)  issuer ;
+
+	}
+
+	if(validate_sub) {
+		decoding_params.validate_sub = (char *) username;
+	}
 
 	decoding_params.validate_exp = validate_exp;
 	decoding_params.exp_tolerance_seconds = 60;
@@ -106,7 +114,7 @@ static int auth_callback(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_jwt(JWT_SIGNING_ALG, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_EXP, JWT_VALIDATE_IAT))
+	if(check_jwt(JWT_SIGNING_ALG, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_SUB, JWT_VALIDATE_EXP, JWT_VALIDATE_IAT))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
@@ -232,6 +240,10 @@ int mosquitto_plugin_init(
 		else if(strcmp(opts[i].key, "jwt_issuer") == 0)
 		{
 			JWT_ISSUER = opts[i].value;
+		}
+		else if(strcmp(opts[i].key, "jwt_validate_sub") == 0)
+		{
+			JWT_VALIDATE_SUB = atoi(opts[i].value);
 		}
 		else if(strcmp(opts[i].key, "jwt_validate_exp") == 0)
 		{
