@@ -155,9 +155,11 @@ char *b64_decode(char *s)
 
 	int v;
 
+	size_t i;
+
 	size_t l = (long) p - (long) s;
 
-	for(size_t i = 0, p = q = s; i < l; i += 4)
+	for(i = 0, p = q = s; i < l; i += 4)
 	{
 		v =                          (0 << 6) | b64_table[*p++ - 43];
 		v =                          (v << 6) | b64_table[*p++ - 43];
