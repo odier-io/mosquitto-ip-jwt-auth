@@ -164,7 +164,7 @@ int mosquitto_plugin_init(
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	mosquitto_log_printf(MOSQ_LOG_INFO, "Starting `mosquitto-jwt-auth` (https://odier.io/mosquitto-jwt-auth/)...");
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Starting `mosquitto-ip-jwt-auth` (https://odier.io/mosquitto-ip-jwt-auth/)...");
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -283,7 +283,7 @@ int mosquitto_plugin_cleanup(
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	mosquitto_log_printf(MOSQ_LOG_INFO, "Stopping `mosquitto-jwt-auth`...");
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Stopping `mosquitto-ip-jwt-auth`...");
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
