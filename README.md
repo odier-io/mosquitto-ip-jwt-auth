@@ -1,5 +1,6 @@
 [![][License img]][License]
 [![][MainRepo img]][MainRepo]
+[![][AltRepo img]][AltRepo]
 
 <a href="http://lpsc.in2p3.fr/" target="_blank">
 	<img src="http://ami.in2p3.fr/docs/images/logo_lpsc.png" alt="LPSC" height="72" />
@@ -87,3 +88,6 @@ Developer
 
 [MainRepo]:https://gitlab.in2p3.fr/jodier/mosquitto-ami-auth/
 [MainRepo img]:https://img.shields.io/badge/Main%20Repo-gitlab.in2p3.fr-success
+
+[AltRepo]:https://github.com/odier-io/mosquitto-ami-auth/
+[AltRepo img]:https://img.shields.io/badge/Alt%20Repo-github.com-success
