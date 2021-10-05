@@ -20,15 +20,15 @@
 	<img src="http://ami.in2p3.fr/docs/images/logo_cern.png" alt="CERN" height="72" />
 </a>
 
-What is mosquitto-ami-auth?
-===========================
+What is mosquitto-ip-jwt-auth?
+==============================
 
 IP and [JWT](https://jwt.io/) authentication plugin for [Eclipse Mosquitto 2](https://mosquitto.org/).
 
 [![JWT](http://jwt.io/img/badge-compatible.svg)](https://jwt.io/)
 
-Installing mosquitto-ami-auth
-=============================
+Installing mosquitto-ip-jwt-auth
+================================
 
 * Requirements:
 
@@ -50,9 +50,11 @@ make deps all
 
 `/etc/mosquitto/mosquitto.conf`:
 ```
-plugin <install_path>/ami-auth.so
+plugin <install_path>/ip-jwt-auth.so
 
 plugin_opt_allowed_ips <my_ip1> <my_ip2> <...> †
+
+plugin_opt_jwt_signing_alg <my_signing_alg> ††
 
 plugin_opt_jwt_secret_key <my_secret_key>
 
@@ -64,6 +66,8 @@ plugin_opt_jwt_validate_iat <0|1>
 ```
 
 > † Warning: 64 IPs max.
+
+> †† See next section.
 
 JWT details
 ===========
