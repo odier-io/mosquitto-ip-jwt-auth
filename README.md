@@ -50,16 +50,16 @@ make deps all
 
 * Configuring:
 
-| Parameter        | Optional | Desccription                                              | Desccription                         | Default value |
-|------------------|----------|-----------------------------------------------------------|--------------------------------------|---------------|
-| allowed_ips      | yes      | Allowed IPs                                               | space-separated list of IPs (64 max) | *empty*       |
-| jwt_signing_alg  | yes      | JWT signing algorithm                                     | See below †                          | HS512         |
-| jwt_secret_key   | yes      | JWT secret key                                            | Free string                          | *empty*       |
-| jwt_issuer       | yes      | If not empty, validate issuer (iss data payload)          | Free string                          | *empty*       |
-| jwt_validate_sub | yes      | If not empty, check subject (sub data payload) = username | 0 or 1                               | 1             |
-| jwt_validate_exp | yes      | Check expiration time (exp data payload)                  | 0 or 1                               | 0             |
-| jwt_validate_nbf | yes      | Check not febore time (nbf data payload)                  | 0 or 1                               | 0             |
-| jwt_validate_iat | yes      | Check issued at time (ita data payload)                   | 0 or 1                               | 0             |
+| Parameter             | Optional | Desccription                                              | Desccription                         | Default value |
+|-----------------------|----------|-----------------------------------------------------------|--------------------------------------|---------------|
+| allowed_ips           | yes      | Allowed IPs                                               | space-separated list of IPs (64 max) | *empty*       |
+| jwt_signing_algorithm | yes      | JWT signing algorithm                                     | See below †                          | HS512         |
+| jwt_secret_key        | yes      | JWT secret key                                            | Free string                          | *empty*       |
+| jwt_issuer            | yes      | If not empty, validate issuer (iss data payload)          | Free string                          | *empty*       |
+| jwt_validate_sub      | yes      | If not empty, check subject (sub data payload) = username | 0 or 1                               | 1             |
+| jwt_validate_exp      | yes      | Check expiration time (exp data payload)                  | 0 or 1                               | 0             |
+| jwt_validate_nbf      | yes      | Check not febore time (nbf data payload)                  | 0 or 1                               | 0             |
+| jwt_validate_iat      | yes      | Check issued at time (ita data payload)                   | 0 or 1                               | 0             |
 
 > † Supported signing algorithms: HS256, HS384, HS512, PS256, PS384, PS512, RS256, RS384, RS512, ES256, ES256K, ES384, ES512, EdDSA.
 
@@ -69,7 +69,7 @@ plugin <install_path>/ip-jwt-auth.so
 
 plugin_opt_allowed_ips <my_ip1> <my_ip2> <...>
 
-plugin_opt_jwt_signing_alg HS512
+plugin_opt_jwt_signing_algorithm HS512
 
 plugin_opt_jwt_secret_key <my_secret_key>
 

@@ -19,7 +19,7 @@ static const char *ALLOWED_IPS[MAX_NUMBER_OF_IPS + 1] = { NULL };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int JWT_SIGNING_ALG = L8W8JWT_ALG_HS512;
+static int JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_HS512;
 
 static const char *JWT_SECRET_KEY = "";
 
@@ -54,7 +54,7 @@ static int check_ip(const char *ips[], const char *ip)
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int check_jwt(int signing_alg, const char *secret_key, const char *issuer, const char *username, const char *password, int validate_sub, int validate_exp, int validate_nbf, int validate_iat)
+static int check_jwt(int signing_algorithm, const char *secret_key, const char *issuer, const char *username, const char *password, int validate_sub, int validate_exp, int validate_nbf, int validate_iat)
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -62,7 +62,7 @@ static int check_jwt(int signing_alg, const char *secret_key, const char *issuer
 
 	l8w8jwt_decoding_params_init(&decoding_params);
 
-	decoding_params.alg = signing_alg;
+	decoding_params.alg = signing_algorithm;
 
 	decoding_params.jwt        = (char *) password;
 	decoding_params.jwt_length = strlen(password);
@@ -119,7 +119,7 @@ static int auth_callback(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_jwt(JWT_SIGNING_ALG, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_SUB, JWT_VALIDATE_EXP, JWT_VALIDATE_NBF, JWT_VALIDATE_IAT))
+	if(check_jwt(JWT_SIGNING_ALGORITHM, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_SUB, JWT_VALIDATE_EXP, JWT_VALIDATE_NBF, JWT_VALIDATE_IAT))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
@@ -189,49 +189,49 @@ int mosquitto_plugin_init(
 
 			ALLOWED_IPS[j++] = NULL;
 		}
-		else if(strcmp(opts[i].key, "jwt_signing_alg") == 0)
+		else if(strcmp(opts[i].key, "jwt_signing_algorithm") == 0)
 		{
 			/**/ if(strcmp(opts[i].value, "HS256") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_HS256;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_HS256;
 			}
 			else if(strcmp(opts[i].value, "HS384") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_HS384;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_HS384;
 			}
 			else if(strcmp(opts[i].value, "HS512") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_HS512;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_HS512;
 			}
 			else if(strcmp(opts[i].value, "RS256") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_RS256;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_RS256;
 			}
 			else if(strcmp(opts[i].value, "RS384") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_RS384;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_RS384;
 			}
 			else if(strcmp(opts[i].value, "RS512") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_RS512;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_RS512;
 			}
 			else if(strcmp(opts[i].value, "PS256") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_PS256;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_PS256;
 			}
 			else if(strcmp(opts[i].value, "PS384") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_PS384;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_PS384;
 			}
 			else if(strcmp(opts[i].value, "PS512") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_PS512;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_PS512;
 			}
 			else if(strcmp(opts[i].value, "ES256") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_ES256;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_ES256;
 			}
 			else if(strcmp(opts[i].value, "ES384") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_ES384;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_ES384;
 			}
 			else if(strcmp(opts[i].value, "ES512") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_ES512;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_ES512;
 			}
 			else if(strcmp(opts[i].value, "ES256K") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_ES256K;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_ES256K;
 			}
 			else if(strcmp(opts[i].value, "EdDSA") == 0) {
-				JWT_SIGNING_ALG = L8W8JWT_ALG_ED25519;
+				JWT_SIGNING_ALGORITHM = L8W8JWT_ALG_ED25519;
 			}
 			else
 			{
