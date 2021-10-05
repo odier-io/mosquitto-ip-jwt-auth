@@ -15,6 +15,8 @@ static const char *ALLOWED_IPS[64] = { NULL };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
+static int JWT_SIGNING_ALG = L8W8JWT_ALG_HS512;
+
 static const char *JWT_SECRET_KEY = "E7F66F88_9DC9_8697_17DD_E292BFFBEE16";
 
 static const char *JWT_ISSUER = "D51D9082_2BB3_B3F8_7FC4_6275B034A09D";
@@ -100,7 +102,7 @@ static int auth_callback(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_jwt(JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_EXP, JWT_VALIDATE_IAT))
+	if(check_jwt(JWT_ALG, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_EXP, JWT_VALIDATE_IAT))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
@@ -145,7 +147,7 @@ int mosquitto_plugin_init(
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	mosquitto_log_printf(MOSQ_LOG_INFO, "Starting `mosquitto-ami-auth`...");
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Starting `mosquitto-jwt-auth` (https://odier.io/mosquitto-jwt-auth/)...");
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -169,6 +171,55 @@ int mosquitto_plugin_init(
 			}
 
 			ALLOWED_IPS[j++] = NULL;
+		}
+		else if(strcmp(opts[i].key, "jwt_signing_alg") == 0)
+		{
+			/**/ if(strcmp(opts[i].value, "HS256") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_HS256;
+			}
+			else if(strcmp(opts[i].value, "HS384") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_HS384;
+			}
+			else if(strcmp(opts[i].value, "HS512") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_HS512;
+			}
+			else if(strcmp(opts[i].value, "RS256") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_RS256;
+			}
+			else if(strcmp(opts[i].value, "RS384") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_RS384;
+			}
+			else if(strcmp(opts[i].value, "RS512") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_RS512;
+			}
+			else if(strcmp(opts[i].value, "PS256") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_PS256;
+			}
+			else if(strcmp(opts[i].value, "PS384") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_PS384;
+			}
+			else if(strcmp(opts[i].value, "PS512") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_PS512;
+			}
+			else if(strcmp(opts[i].value, "ES256") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_ES256;
+			}
+			else if(strcmp(opts[i].value, "ES384") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_ES384;
+			}
+			else if(strcmp(opts[i].value, "ES512") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_ES512;
+			}
+			else if(strcmp(opts[i].value, "ES256K") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_ES256K;
+			}
+			else if(strcmp(opts[i].value, "EdDSA") == 0) {
+				JWT_SIGNING_ALG = L8W8JWT_ALG_ED25519;
+			}
+			else
+			{
+				mosquitto_log_printf(MOSQ_LOG_ERR, "Invalid JWT signing algorithm `%s`, while use `%s`", opts[i].value, "HS512");
+			}
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
@@ -207,7 +258,7 @@ int mosquitto_plugin_cleanup(
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	mosquitto_log_printf(MOSQ_LOG_INFO, "Stopping `mosquitto-ami-auth`...");
+	mosquitto_log_printf(MOSQ_LOG_INFO, "Stopping `mosquitto-jwt-auth`...");
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
