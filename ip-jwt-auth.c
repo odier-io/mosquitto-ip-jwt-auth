@@ -57,7 +57,7 @@ static int check_ip(const char *ips[], const char *ip)
 /* JWT AUTHENTICATION                                                                                                 */
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int check_jwt(int signing_algorithm, const char *secret_key, const char *issuer, const char *username, const char *password, int validate_sub, int validate_exp, int validate_nbf, int validate_iat)
+static int check_jwt(int signing_algorithm, const char *secret_key, const char *issuer, int validate_sub, int validate_exp, int validate_nbf, int validate_iat, const char *username, const char *password)
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -210,8 +210,13 @@ static int auth_callback(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_jwt(JWT_SIGNING_ALGORITHM, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_SUB, JWT_VALIDATE_EXP, JWT_VALIDATE_NBF, JWT_VALIDATE_IAT))
-	{
+	if(check_jwt(
+		JWT_SIGNING_ALGORITHM, JWT_SECRET_KEY, JWT_ISSUER,
+		JWT_VALIDATE_SUB, JWT_VALIDATE_EXP,
+		JWT_VALIDATE_NBF, JWT_VALIDATE_IAT,
+		basic_auth->username,
+		basic_auth->password
+	) {
 		return MOSQ_ERR_SUCCESS;
 	}
 
