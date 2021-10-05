@@ -48,53 +48,32 @@ make deps all
 
 * Configuring:
 
-| Parameter        | Is optional | Desccription                 | Default value |
-|------------------|-------------|------------------------------|---------------|
-| allowed_ips      | yes         | space-sepaarated list of IPs | *empty*       |
-| jwt_signing_alg  | yes         | See next section             | HS512         |
-| jwt_secret_key   | yes         | Free string                  | *empty*       |
-| jwt_issuer       | yes         | Free string                  | *empty*       |
-| jwt_validate_sub | yes         | 0 or 1                       | 1             |
-| jwt_validate_exp | yes         | 0 or 1                       | 0             |
-| jwt_validate_iat | yes         | 0 or 1                       | 0             |
+| Parameter        | Is optional | Desccription                                              | Desccription                         | Default value |
+|------------------|-------------|-----------------------------------------------------------|--------------------------------------|---------------|
+| allowed_ips      | yes         | Allowed IPs                                               | space-separated list of IPs (64 max) | *empty*       |
+| jwt_signing_alg  | yes         | JWT signing algorithm                                     | See below †                          | HS512         |
+| jwt_secret_key   | yes         | JWT secret key                                            | Free string                          | *empty*       |
+| jwt_issuer       | yes         | If not empty, check issuer (iss data payload)             | Free string                          | *empty*       |
+| jwt_validate_sub | yes         | If not empty, check subject (sub data payload) = username | 0 or 1                               | 1             |
+| jwt_validate_exp | yes         | Check expiration time (exp data payload)                  | 0 or 1                               | 0             |
+| jwt_validate_nbf | yes         | Check not febore time (nbf data payload)                  | 0 or 1                               | 0             |
+| jwt_validate_iat | yes         | Check issued at time (ita data payload)                   | 0 or 1                               | 0             |
 
+> † Supported signing algorithms: HS256, HS384, HS512, PS256, PS384, PS512, RS256, RS384, RS512, ES256, ES256K, ES384, ES512, EdDSA.
 
-`/etc/mosquitto/mosquitto.conf`:
+Example of `mosquitto.conf` file:
 ```
 plugin <install_path>/ip-jwt-auth.so
 
-plugin_opt_allowed_ips <my_ip1> <my_ip2> <...> †
+plugin_opt_allowed_ips <my_ip1> <my_ip2> <...>
 
-plugin_opt_jwt_signing_alg <my_signing_alg>
+plugin_opt_jwt_signing_alg HS512
 
 plugin_opt_jwt_secret_key <my_secret_key>
 
 plugin_opt_jwt_issuer <my_issuer>
 
-plugin_opt_jwt_validate_sub <0|1>
-
-plugin_opt_jwt_validate_exp <0|1>
-
-plugin_opt_jwt_validate_iat <0|1>
-```
-
-> † Warning: 64 IPs max.
-
-JWT details
-===========
-
-Supported signing algorithms: HS256, HS384, HS512, PS256, PS384, PS512, RS256, RS384, RS512, ES256, ES256K, ES384, ES512, EdDSA.
-
-MQTT authenticcation:
-  - the subject is the username,
-  - the token is the password.
-
-Madatory JWT payload data entries:
-```json
-{
-	"iss": "<issuer>",
-	"sub": "<subject>"
-}
+plugin_opt_jwt_validate_exp 1
 ```
 
 Developer

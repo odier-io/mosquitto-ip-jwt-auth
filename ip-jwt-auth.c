@@ -29,6 +29,8 @@ static int JWT_VALIDATE_SUB = 0;
 
 static int JWT_VALIDATE_EXP = 0;
 
+static int JWT_VALIDATE_NBF = 0;
+
 static int JWT_VALIDATE_IAT = 0;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -52,7 +54,7 @@ static int check_ip(const char *ips[], const char *ip)
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static int check_jwt(int signing_alg, const char *secret_key, const char *issuer, const char *username, const char *password, int validate_sub, int validate_exp, int validate_iat)
+static int check_jwt(int signing_alg, const char *secret_key, const char *issuer, const char *username, const char *password, int validate_sub, int validate_exp, int validate_nbf, int validate_iat)
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
@@ -79,6 +81,9 @@ static int check_jwt(int signing_alg, const char *secret_key, const char *issuer
 
 	decoding_params.validate_exp = validate_exp;
 	decoding_params.exp_tolerance_seconds = 60;
+
+	decoding_params.validate_nbf = validate_nbf;
+	decoding_params.nbf_tolerance_seconds = 60;
 
 	decoding_params.validate_iat = validate_iat;
 	decoding_params.iat_tolerance_seconds = 60;
@@ -114,7 +119,7 @@ static int auth_callback(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_jwt(JWT_SIGNING_ALG, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_SUB, JWT_VALIDATE_EXP, JWT_VALIDATE_IAT))
+	if(check_jwt(JWT_SIGNING_ALG, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_SUB, JWT_VALIDATE_EXP, JWT_VALIDATE_NBF, JWT_VALIDATE_IAT))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
@@ -248,6 +253,10 @@ int mosquitto_plugin_init(
 		else if(strcmp(opts[i].key, "jwt_validate_exp") == 0)
 		{
 			JWT_VALIDATE_EXP = atoi(opts[i].value);
+		}
+		else if(strcmp(opts[i].key, "jwt_validate_nbf") == 0)
+		{
+			JWT_VALIDATE_NBF = atoi(opts[i].value);
 		}
 		else if(strcmp(opts[i].key, "jwt_validate_iat") == 0)
 		{
