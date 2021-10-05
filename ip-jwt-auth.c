@@ -106,7 +106,7 @@ static int auth_callback(
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	if(check_jwt(JWT_ALG, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_EXP, JWT_VALIDATE_IAT))
+	if(check_jwt(JWT_SIGNING_ALG, JWT_SECRET_KEY, JWT_ISSUER, basic_auth->username, basic_auth->password, JWT_VALIDATE_EXP, JWT_VALIDATE_IAT))
 	{
 		return MOSQ_ERR_SUCCESS;
 	}
