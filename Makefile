@@ -9,4 +9,4 @@ deps:
 	./make_dependencies.sh
 
 clean:
-	rm -fr ./lib ./include ./jwt-auth.so
+	rm -fr ./lib ./include ./ip-jwt-auth.so
