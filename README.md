@@ -50,7 +50,7 @@ make deps all
 
 * Configuring:
 
-| Parameter             | Optional | Desccription                                              | Desccription                         | Default value |
+| Parameter             | Optional | Description                                               | Valid values                         | Default value |
 |-----------------------|----------|-----------------------------------------------------------|--------------------------------------|---------------|
 | allowed_ips           | yes      | Allowed IPs                                               | space-separated list of IPs (64 max) | *empty*       |
 | jwt_signing_algorithm | yes      | JWT signing algorithm                                     | See below †                          | HS512         |
