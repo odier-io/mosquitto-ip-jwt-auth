@@ -7,6 +7,7 @@
 #include <mosquitto_broker.h>
 #include <mosquitto_plugin.h>
 
+#include <l8w8jwt/base64.h>
 #include <l8w8jwt/decode.h>
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -237,6 +238,10 @@ int mosquitto_plugin_init(
 			{
 				mosquitto_log_printf(MOSQ_LOG_ERR, "Invalid JWT signing algorithm `%s`, will use `%s`", opts[i].value, "HS512");
 			}
+		}
+		else if(strcmp(opts[i].key, "jwt_b64_secret_key") == 0)
+		{
+			JWT_SECRET_KEY = opts[i].value;
 		}
 		else if(strcmp(opts[i].key, "jwt_secret_key") == 0)
 		{
