@@ -216,7 +216,7 @@ static int auth_callback(
 		JWT_VALIDATE_NBF, JWT_VALIDATE_IAT,
 		basic_auth->username,
 		basic_auth->password
-	) {
+	)) {
 		return MOSQ_ERR_SUCCESS;
 	}
 
