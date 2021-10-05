@@ -11,7 +11,11 @@
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-static const char *ALLOWED_IPS[64] = { NULL };
+#define MAX_NUMBER_OF_IPS 64
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+static const char *ALLOWED_IPS[MAX_NUMBER_OF_IPS + 1] = { NULL };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -31,7 +35,7 @@ static int check_ip(const char *ips[], const char *ip)
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	for(int i = 0; i < 64 && ips[i] != NULL; i++)
+	for(int i = 0; ips[i] != NULL; i++)
 	{
 		if(strcmp(ips[i], ip) == 0)
 		{
@@ -164,7 +168,7 @@ int mosquitto_plugin_init(
 			/**/
 
 			for(word = strtok_r(buff, " ", &brkt);
-			    j < 64 && word != NULL;
+			    j < MAX_NUMBER_OF_IPS && word != NULL;
 			    word = strtok_r(NULL, " ", &brkt)
 			) {
 				ALLOWED_IPS[j++] = word;
