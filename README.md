@@ -53,7 +53,7 @@ make deps all
 | allowed_ips      | yes         | Allowed IPs                                               | space-separated list of IPs (64 max) | *empty*       |
 | jwt_signing_alg  | yes         | JWT signing algorithm                                     | See below †                          | HS512         |
 | jwt_secret_key   | yes         | JWT secret key                                            | Free string                          | *empty*       |
-| jwt_issuer       | yes         | If not empty, check issuer (iss data payload)             | Free string                          | *empty*       |
+| jwt_issuer       | yes         | If not empty, validate issuer (iss data payload)          | Free string                          | *empty*       |
 | jwt_validate_sub | yes         | If not empty, check subject (sub data payload) = username | 0 or 1                               | 1             |
 | jwt_validate_exp | yes         | Check expiration time (exp data payload)                  | 0 or 1                               | 0             |
 | jwt_validate_nbf | yes         | Check not febore time (nbf data payload)                  | 0 or 1                               | 0             |

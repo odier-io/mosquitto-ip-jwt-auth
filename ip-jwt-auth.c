@@ -25,7 +25,7 @@ static const char *JWT_SECRET_KEY = "";
 
 static const char *JWT_ISSUER = "";
 
-static int JWT_VALIDATE_SUB = 0;
+static int JWT_VALIDATE_SUB = 1;
 
 static int JWT_VALIDATE_EXP = 0;
 
@@ -75,7 +75,7 @@ static int check_jwt(int signing_alg, const char *secret_key, const char *issuer
 
 	}
 
-	if(validate_sub) {
+	if(   validate_sub   ) {
 		decoding_params.validate_sub = (char *) username;
 	}
 
