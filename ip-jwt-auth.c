@@ -195,7 +195,7 @@ static char *b64_decode(char *s)
 static int auth_callback(
 	int event,
 	void *event_data,
-	void *userdata
+	void *user_data
 ) {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
