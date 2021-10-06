@@ -84,13 +84,17 @@ static int check_jwt(int signing_algorithm, const char *secret_key, const char *
 	decoding_params.verification_key        = (char *) secret_key;
 	decoding_params.verification_key_length = strlen(secret_key);
 
-	if(strlen(issuer) > 0) {
-		decoding_params.validate_iss = (char *)  issuer ;
+	if(strlen(issuer) > 0)
+	{
+		decoding_params.validate_iss        = (char *)  issuer ;
+		decoding_params.validate_iss_length = strlen(issuer);
 
 	}
 
-	if(   validate_sub   ) {
-		decoding_params.validate_sub = (char *) username;
+	if(   validate_sub   )
+	{
+		decoding_params.validate_sub        = (char *) username;
+		decoding_params.validate_sub_length = strlen(username);
 	}
 
 	decoding_params.validate_exp = validate_exp;
