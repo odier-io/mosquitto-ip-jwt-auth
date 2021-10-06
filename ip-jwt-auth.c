@@ -18,7 +18,6 @@
 #include <mosquitto_broker.h>
 #include <mosquitto_plugin.h>
 
-#include <l8w8jwt/base64.h>
 #include <l8w8jwt/decode.h>
 
 /*--------------------------------------------------------------------------------------------------------------------*/
