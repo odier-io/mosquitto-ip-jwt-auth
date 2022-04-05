@@ -87,7 +87,6 @@ static int check_jwt(int signing_algorithm, const char *secret_key, const char *
 	{
 		decoding_params.validate_iss        = (char *)  issuer ;
 		decoding_params.validate_iss_length = strlen(issuer);
-
 	}
 
 	if(   validate_sub   )
