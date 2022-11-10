@@ -41,7 +41,7 @@ then
   mkdir $MOSQUITTO_AMI_HOME/l8w8jwt/build
   cd $MOSQUITTO_AMI_HOME/l8w8jwt/build
 
-  CFLAGS='-fPIC -Wno-unused-result' cmake -DBUILD_SHARED_LIBS=Off -DL8W8JWT_PACKAGE=On -DL8W8JWT_ENABLE_EDDSA=On -DCMAKE_BUILD_TYPE=Release ..
+  CFLAGS='-fPIC -Wno-unused-result -Wno-stringop-overflow' cmake -DBUILD_SHARED_LIBS=Off -DL8W8JWT_PACKAGE=On -DL8W8JWT_ENABLE_EDDSA=On -DCMAKE_BUILD_TYPE=Release ..
 
   cmake --build . --config Release -j 2
 
